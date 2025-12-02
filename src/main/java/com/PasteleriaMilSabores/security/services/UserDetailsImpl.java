@@ -4,6 +4,7 @@ package com.PasteleriaMilSabores.security.services;
 
 import com.PasteleriaMilSabores.model.Usuario;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.io.Serial;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -13,6 +14,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public class UserDetailsImpl implements UserDetails {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private Long id;
@@ -35,9 +37,9 @@ public class UserDetailsImpl implements UserDetails {
 
     // Método estático para construir UserDetailsImpl a partir de tu Entidad Usuario
     public static UserDetailsImpl build(Usuario usuario) {
-        // Convierte el String de Rol a un objeto GrantedAuthority
+        // Convierte el enum Rol a un objeto GrantedAuthority usando su nombre
         List<GrantedAuthority> authorities = Collections.singletonList(
-            new SimpleGrantedAuthority(usuario.getRol())); 
+            new SimpleGrantedAuthority(usuario.getRol().name())); 
 
         return new UserDetailsImpl(
             usuario.getId(), 
